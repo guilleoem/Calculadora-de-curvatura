@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <link rel="icon" type="image/png" sizes="32x32" href="Images/favicon-32x32.png">
+  <link href="main.css" rel="stylesheet"/>
+  <title>Calculadora de curvatura</title>
+</head>
+<body onload="cambiarPestanna(1);calcZoom();dibujar();">
+
+  <h1>Calculadora de curvatura</h1>
+
+  <div class="graphContainer">
+    <!--<canvas class="graph" id="graph" width="1260px" height="450px"></canvas>-->
+    <canvas class="graph" id="graph"></canvas>
+      
+  </div>
+
+  <!--TABLA DE CONTROLES DE ENTRADA-->
+  <div id="tableInputData">
+    <table>
+      <tbody>
+        <tr>
+          <td><label class="labels">Altura observador</label></td>
+          <td><input type="text" id="ho" value="1.8" class="txtnum"></td>
+          <td><div name="selUnitContainer"></div></td>
+          <td><div><input type="range" min="0.01" max="450000" step="any" value="1.8" class="inputSld" id="sldAlturaObservador"></div></td>
+        </tr>
+        <tr>
+          <td><label class="labels">Distancia</label></td>
+          <td><input type="text" id="dc" value="12000" class="txtnum"></td>
+          <td><div name="selUnitContainer"></div></td>
+          <td><div><input type="range" min="1" max="440000" step="any" value="12000" class="inputSld" id="sldDistancia"></div></td>
+        </tr>
+        <tr>
+          <td><label class="labels">Altura Objetivo</label></td>
+          <td><input type="text"  id="hobj" value="100" class="txtnum"></td>
+          <td><div name="selUnitContainer"></div></td>
+          <td><div><input type="range" min="1" max="10000" step="any" value="10" class="inputSld" id="sldAlturaObjetivo"></div></td>
+        </tr>
+        
+
+      </tbody>
+    </table>
+
+  </div>
+
+    <!--PESTAÑAS-->
+    <div id="pestanas">
+      <ul id="lista">
+          <li id="pestana1"><a href='javascript:cambiarPestanna(1);'>Objetivo</a></li>
+          <li id="pestana2"><a href='javascript:cambiarPestanna(2);'>Horizonte</a></li>
+          <li id="pestana3"><a href='javascript:cambiarPestanna(3);'>Drop</a></li>
+          <li id="pestana4"><a href='javascript:cambiarPestanna(4);'>Refracción</a></li>
+          <li id="pestana5"><a href='javascript:cambiarPestanna(5);'>Opciones</a></li>
+          <li id="pestana6"><a href='javascript:cambiarPestanna(6);'>Cámara</a></li>
+          <li id="pestana7"><a href='javascript:cambiarPestanna(7);'>Opciones objetivo</a></li>
+          <li id="pestana8"><a href='javascript:cambiarPestanna(8);'>Gráfico</a></li>
+          <li id="pestana9"><a href='javascript:cambiarPestanna(9);'>Animación</a></li>
+      </ul>
+    </div>
+
+    <!--CONTENIDO PESTAÑAS-->
+    <div id="contenidopestanas">
+      <div id="cpestana1">        <!--Objetive tab-->
+        <div class="tableResultsData">
+          <table>
+            <tr class="rowLbl">
+              <td>distancia angular</td>
+              <td>altura visible</td>
+              <td>altura oculta</td>
+              <td>tamaño angular visible</td>
+              <td>porcentaje visible</td>
+              <td>ángulo extremo</td>
+            </tr><!--etiquetas-->
+            <tr class="rowResults">
+              <td>
+                <div><!--distancia angular-->
+                  <input type="text" readonly="true" class="txtresult" id="txtda">
+                  <div name="unitAngleContainer">°</div>
+                </div>
+              </td>
+              <td>
+                <div><!--altura visible-->
+                  <input type="text" readonly="true" class="txtresult" id="txthv">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td>
+              <td>
+                <div><!--altura oculta-->
+                  <input type="text" readonly="true" class="txtresult" id="txthh">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td>
+              <td>
+                <div><!--tamaño angular visible-->
+                  <input type="text" readonly="true" class="txtresult" id="txttav">
+                  <div name="unitAngleContainer">°</div>
+                </div>
+              </td>
+              <td>
+                <div><!--tamaño angular oculto-->
+                  <input type="text" readonly="true" class="txtresult" id="txtpv">
+                  <div>%</div>
+                </div>
+              </td>
+              <td>
+                <div><!--ángulo visual extremo-->
+                  <input type="text" readonly="true" class="txtresult" id="txtave">
+                  <div name="unitAngleContainer">°</div>
+                </div>
+              </td>
+            </tr><!--textbox y selectbox-->
+            <tr class="rowLbl">
+              <td>distancia visual base</td>
+              <td>distancia visual extremo</td>
+              
+            </tr><!--etiquetas-->
+            <tr class="rowResults">
+              <td>
+                <div><!--distancia visual base-->
+                  <input type="text" readonly="true" class="txtresult" id="txtdvb">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td>
+              <td>
+                <div><!--distancia visual extremo-->
+                  <input type="text" readonly="true" class="txtresult" id="txtdve">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td>
+              
+          </table>
+        </div>
+      </div>
+      <div id="cpestana2">        <!--Horizon tab-->
+        <div class="tableResultsData">
+          <table>
+            <tr class="rowLbl">
+              <td>distancia visual al horizonte</td>
+              <td>distancia al horizonte</td>
+              <td>distancia angular horizonte</td> 
+              <td>radio horizonte visible</td>
+              <td>radio horizonte geométrico</td>
+            </tr><!--etiquetas-->
+            <tr class="rowResults">
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtdvh">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--distancia visual al horizonte-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtdch">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--distancia al horizonte-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtdah">
+                  <div name="unitAngleContainer">°</div><!--distancia angular al horizonte-->
+                </div>
+              </td><!--distancia angular horizonte-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtrhv">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--radio horizonte visible-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtrhg">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--radio horizonte geométrico-->
+            </tr><!--textbox y selectbox-->
+            <tr class="rowLbl">
+              <td>distancia visual horizonte-objetivo</td>    
+              <td>distancia horizonte-objetivo</td>
+              <td>distancia angular horizonte-objetivo</td>
+              <td>distancia recta base (cuerda)</td>
+            </tr><!--etiquetas-->
+            <tr class="rowResults">
+              <td>
+                <div>
+                  <input type="text"  readonly="true" class="txtresult" id="txtdvo">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--distancia visual horizonte-objetivo-->
+              <td>
+                <div>
+                  <input type="text"  readonly="true" class="txtresult" id="txtdco">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--distancia horizonte-objetivo-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtalpha_o">
+                  <div name="unitAngleContainer">°</div>
+                </div>
+              </td><!--distancia angular horizonte-objetivo-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtdrb">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--distancia recta base (cuerda)-->
+            </tr><!--textbox y selectbox-->
+          </table>
+        </div>
+      </div>
+      <div id="cpestana3">        <!--Drop tab-->
+        <div class="tableResultsData">
+          <table>
+            <tr class="rowLbl">
+              <td>drop angular al horizonte</td>
+              <td>drop visual-horizonte</td>
+              <td>drop en el horizonte</td>
+              <td>drop visual-objetivo</td>
+              <td>drop objetivo</td> 
+            </tr><!--etiquetas-->
+            <tr class="rowResults">
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtalpha_h">
+                  <div name="unitAngleContainer">°</div>
+                </div>
+              </td><!--drop angular en el horizonte-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtdrop_vh">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--drop visual-horizonte-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtdrop_h">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--drop en el horizonte-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtdrop_vo">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--drop visual objetivo-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtdrop">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--drop-->
+            </tr><!--textbox y selectbox-->
+
+          </table>
+        </div>
+      </div>
+      <div id="cpestana4">        <!--refraction tab-->
+        <div>
+          <table>
+            <tbody>
+              <tr>
+                <td><label class="labels">k</label></td>
+                <td><input type="text"  id="refrc" value="0" class="txtnum"></td>
+                <td><label class="labels">a</label></td>
+                <td><input type="text"  id="refrca" value="1" class="txtnum"></td>
+                <td><input type="range" min="-0.999999999" max="0.999999999" step="any" value="0" class="inputSld" id="sldRefrc"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <table>
+            <tbody>
+              <tr>
+                <td><label><input type="radio" name="rdbtnRefrc" id="refrcCustom">personalizada</label></td>
+                <td><label><input type="radio" name="rdbtnRefrc" id="refrc0" checked>sin Refracción</label></td>
+                <td><label><input type="radio" name="rdbtnRefrc" id="refrc008">k=0.08</label></td>
+                <td><label><input type="radio" name="rdbtnRefrc" id="refrc013">k=0.13</label></td>
+                <td><label><input type="radio" name="rdbtnRefrc" id="refrc0143">k=0.143</label></td>
+                <td><label><input type="radio" name="rdbtnRefrc" id="refrc017">k=0.17</label></td>
+                <td><label><input type="radio" name="rdbtnRefrc" id="refrc76">a=7/6</label></td>
+                <td><label><input type="radio" name="rdbtnRefrc" id="refrc67">a=6/7 (inversa)</label></td>
+                <td><label><input type="radio" name="rdbtnRefrc" id="refrc72">a=7/2 (looming)</label></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tableResultsData">
+          <table>
+            <tr class="rowLbl">
+              <td>ángulo de Refracción</td>
+              <td>radio de Refracción</td>
+              <td>lift en el horizonte</td>
+              <td>lift en el objetivo</td>
+            </tr><!--etiquetas-->
+            <tr class="rowResults">
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtangRefrc">
+                  <div name="unitAngleContainer">°</div>
+                </div>
+              </td><!--ángulo de Refracción-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtradRefrc">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--radio de Refracción-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtlift_h">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--lift en el horizonte-->
+              <td>
+                <div>
+                  <input type="text" readonly="true" class="txtresult" id="txtlift_o">
+                  <div name="selUnitContainer"></div>
+                </div>
+              </td><!--lift en el objetivo-->
+            </tr><!--textbox y selectbox-->
+
+          </table>
+        </div>
+
+      </div>
+      <div id="cpestana5">        <!--Option tab-->
+        
+        <div class="optionBox">
+
+                
+                <div id="optionFieldsets">
+                  <fieldset>
+                    <legend><i>mostrar ángulos</i></legend>
+                    <label><input type="radio" name="rdbtnUnitAngle" id="uDeg" onclick=changeUnitAng(id) checked>sexagesimales</label>
+                    <label><input type="radio" name="rdbtnUnitAngle" id="uRad" onclick=changeUnitAng(id)>radianes</label>
+                    <label><input type="radio" name="rdbtnUnitAngle" id="uGon" onclick=changeUnitAng(id)>gons</label>
+                  </fieldset>
+                  <fieldset>
+                    <legend><i>unidades</i></legend>
+                    <label><input type="radio" name="rdbtnUnitSystem" id="uDec" onclick=changeUnitSys(id) checked>métrico</label>
+                    <label><input type="radio" name="rdbtnUnitSystem" id="uImp" onclick=changeUnitSys(id)>imperial</label>
+                  </fieldset>
+                  
+                  <fieldset>
+                    <legend><i>vista</i></legend>
+                    <label><input type="radio" name="rdbtnView" id="vwSimple" onclick=dibujar() checked>simple</label>
+                    <label><input type="radio" name="rdbtnView" id="vwPersp" onclick=dibujar()>perspectiva</label>
+                  </fieldset>
+
+                  <fieldset>
+                    <legend><i>escala altura</i></legend>
+                    <label><input type="radio" name="rdbtnScale" id="optLinearObserverHeigth" onclick=dibujar() checked>lineal</label>
+                    <label><input type="radio" name="rdbtnScale" id="optLogObserverHeigth" onclick=dibujar()>logarítmica</label>
+                  </fieldset>
+                </div>
+
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><label class="labels">Radio terrestre</label></td>
+                      <td><input type="text" id="RT" value="6371000" class="txtnum"></td>
+                      <td><div name="selUnitContainer"></div></td>
+                      <td><input type="range" min="1730000" max="6378000" step="any" value="6371000" class="inputSld" id="sldRT"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><label class="labels">Animar cambios</label></td>
+                      <td><input type="checkbox" id="chkAnimateChanges"></td>
+                    </tr>
+                  </tbody>
+                </table>
+        </div>        
+      </div>
+
+
+      <div id="pest6">
+
+      
+        <div id="cpestana6">        <!--Camera tab-->
+          <div id="cameraTabContent">
+            
+              <div>
+                <fieldset>
+                  <legend><i>zoom (f en mm)</i></legend>
+                  <div id="zoomFieldset">
+                    <input type="text"  id="ZoomF" value="24" class="txtnum">
+                    <input type="range" min="21" max="12000" step="any" value="24" class="inputSldAux" id="sldF">
+                  </div>
+                </fieldset>
+                <table id="otherCameraOptions">
+                  <tbody>
+
+                    <tr>
+                      <td><input type="checkbox" name="verHorizon" id="chkVerHA">Ver horizonte astronómico</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" name="verHorizon" id="chkVerHC">Ver horizonte celeste</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" name="verHTheodolite" id="chkVerTd">Ver teodolito</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <fieldset id="centerView">
+                <legend><i>centrar vista</i></legend>
+                <table>
+                  <tr>
+                    <td><label><input type="radio" name="rdbtnView2" id="vwHorAst" onclick=dibujar() checked>horizonte astronómico</label></td>
+                  </tr>
+                  <tr>
+                    <td><label><input type="radio" name="rdbtnView2" id="vwHorCel" onclick=dibujar()>horizonte celeste</label></td>
+                  </tr>
+                  <tr>
+                    <td><label><input type="radio" name="rdbtnView2" id="vwHorLib" onclick=dibujar()>libre</label></td>
+                  </tr>
+                </table>
+              </fieldset>
+            
+            <fieldset id="controlCamera">
+              <legend><i>orientación</i></legend>
+              <table>
+                <tbody>
+                  <tr>
+                    <td><label class="labels">paneo</label></td>
+                    <td><input type="text" id="angPan" value="0" class="txtnum"></td>
+                    <td><div name="unitAngleContainer">°</div></td>
+                    <td><input type="range" min="-1.37079632679" max="1.37079632679" step="any" value="0" class="inputSldAux" id="sldPan"></td>
+                  </tr>
+                  <tr>
+                    <td><label class="labels">cabeceo</label></td>
+                    <td><input type="text" id="angTilt" value="0" class="txtnum"></td>
+                    <td><div name="unitAngleContainer">°</div></td>
+                    <td name="tiltslider"><input type="range" min="-1.5964532925199433" max="1.5174532925199433" step="any" value="0"class="inputSldAux" id="sldTilt"></td>
+                  </tr>
+                  <tr>
+                    <td><label class="labels">roll</label></td>
+                    <td><input type="text"  id="angRoll" value="0" class="txtnum"></td>
+                    <td><div name="unitAngleContainer">°</div></td>
+                    <td><input type="range" min="-0.9574532925199433" max="0.9574532925199433" step="any" value="0" class="inputSldAux" id="sldRoll"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </fieldset>
+          </div>
+          
+        </div>
+        
+      </div>
+
+      <div id="pest7">
+
+        <div id="cpestana7">        <!--Object options tab-->
+          <div id="objectOptionsContainer">
+            <fieldset id="objectTypeFieldset">
+              <legend><i>tipo de objetivo</i></legend>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                        <select id="selectObject">
+                          <option value="0">Estadía</option>
+                          <option value="1">Edificio 1</option>
+                          <option value="2">Edificio 2</option>
+                          <option value="3">Velero</option>
+                          <option value="4">Petrolero</option>
+                          <option value="5">Crucero Carnival</option>
+                          <option value="6">Carnival Vista</option>
+                          <option value="7">Celebrity Summit</option>
+                          <option value="8">Montaña</option>
+                          <option value="9">Torres de electricidad</option>
+                          <option value="10">Codelco Ventana</option>
+                        </select>
+                    </td>
+                  </tr>
+            
+                </tbody>
+              </table>
+            </fieldset>
+            <div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td><label class="labels">Desplazamiento x</label></td>
+                    <td><input type="text"  id="txtdlatobj" value="0" class="txtnum"></td>
+                    <td><div name="selUnitContainer"></div></td>
+                    <td><input type="range" min="-120" max="120" step="any" value="0" class="inputSld" id="slddlatobj"></td>
+                  </tr>
+                  <div id="separacionZ">
+                    <tr>
+            
+                        <td><label class="labels">Separación z</label></td>
+                        <td><input type="text"  id="txtDdistobj" value="275" class="txtnum"></td>
+                        <td><div name="selUnitContainer"></div></td>
+                        <td><input type="range" min="245" max="315" step="any" value="275" class="inputSld" id="sldDdistobj"></td>
+            
+                    </tr>
+                  </div>
+            
+            
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          
+        </div>
+      </div>
+
+      <div id="pest8">
+        <div id="cpestana8">        <!--Image tab-->
+          <div id="graphicControlContainer">
+            <div>
+              <table>
+                <tbody>
+                  <tr>fondo
+                    <div><input type="file" id="imgfondo" accept="image/png, image/jpeg"></div>
+                  </tr>
+                </tbody>
+              </table>
+            
+            </div>
+            <fieldset id="controlAlpha">
+              <legend><i>color</i></legend>
+              <table>
+                <tbody>
+                  <tr>
+                    <td><label class="labels">R</label></td>
+                    <td><input type="text" id="txtR" value="0" class="txtnum"></td>
+                    <td><input type="range" min="0" max="255" step="1" value="0" class="inputSldAux" id="sldR"></td>
+                  </tr>
+                  <tr>
+                    <td><label class="labels">G</label></td>
+                    <td><input type="text" id="txtG" value="0" class="txtnum"></td>
+                    <td><input type="range" min="0" max="255" step="1" value="0" class="inputSldAux" id="sldG"></td>
+                  </tr>
+                  <tr>
+                    <td><label class="labels">B</label></td>
+                    <td><input type="text" id="txtB" value="140" class="txtnum"></td>
+                    <td><input type="range" min="0" max="255" step="1" value="140" class="inputSldAux" id="sldB"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </fieldset>
+            <fieldset>
+            <legend><i>alpha</i></legend>
+            <table>
+              <tbody>
+                <tr >
+                  <td><label class="labels">alpha superficie</label></td>
+                  <td><input type="text" id="txtalpha" value="0.6" class="txtnum"></td>
+                  <td><input type="range" min="0" max="1" step="any" value="0.6" class="inputSldAux" id="sldalpha"></td>
+                </tr>
+                <tr>
+                  <td><label class="labels">alpha objetivo</label></td>
+                  <td><input type="text"  id="txtalphaobj" value="1" class="txtnum"></td>
+                  <td><input type="range" min="0" max="1" step="any" value="1" id="sldalphaobj"></td>
+                </tr>
+                <tr>
+                  <td><label class="labels">alpha fondo</label></td>
+                  <td><input type="text"  id="txtalphaback" value="0" class="txtnum"></td>
+                  <td><input type="range" min="0" max="1" step="any" value="0" id="sldalphaback"></td>
+                </tr>
+              </tbody>
+            </table>
+            </fieldset>
+          </div>
+        
+      </div>    
+
+        <div id="pest9">
+
+          <div id="cpestana9">        <!--Animation tab-->
+            <!--
+            <table>
+              <tbody>
+                <tr>
+                  <select id="selectAnim">
+                    <option value="0">Estadía</option>
+                    <option value="1">Edificio 1</option>
+                    <option value="2">Edificio 2</option>
+                    <option value="3">Velero</option>
+                    <option value="4">Petrolero</option>
+                    <option value="5">Crucero Carnival</option>
+                    <option value="6">Carnival Vista</option>
+                    <option value="7">Celebrity Summit</option>
+                    <option value="8">Montaña</option>
+                    <option value="9">Torres de electricidad</option>
+                  </select>
+                  <td><button type="button" onclick="animacion();">Play</button></td>
+                  <td><button type="button" onclick="clearTimeout(timerScene);">Stop</button></td>
+                  <td><button type="button" onclick="pruebaanimacion();">Prueba</button></td>
+
+                </tr>
+                
+              </tbody>
+            </table>
+            -->
+          </div>
+        </div>
+      
+    </div>
+  
+    <script src="JS.js">dibujar();</script>
+
+  <!--<script src="calc.js">dibujar();</script>
+  <script src="graph.js"></script>
+  <script src="graph3D.js"></script>    
+  <script src="tabs.js"></script>
+  <script src="cuaternions.js"></script>
+  <script src="anim.js"></script>
+  <script src="mouseevents.js"></script>
+  <script src="objects.js"></script>-->
+
+  
+</body>
+</html>

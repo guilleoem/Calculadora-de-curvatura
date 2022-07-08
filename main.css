@@ -1,0 +1,205 @@
+/*------------------------------------------------------------------------------*/
+/*-----------------------------------GENERAL------------------------------------*/
+/*------------------------------------------------------------------------------*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  font-size: small;
+}
+
+/*------------------------------------------------------------------------------*/
+/*-----------------------------------PESTAÑAS-----------------------------------*/
+/*------------------------------------------------------------------------------*/
+
+#pestanas {
+  font-size: 2ex;
+}
+
+#pestanas ul{
+  margin-left: 5px;    
+}
+
+#pestanas li{
+  list-style-type: none;
+  float: left;
+  text-align: center;
+  margin: 0px 1px -1px -0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 1px solid gray;
+
+  padding: 0px 10px;
+}
+
+#pestanas a:link{
+  text-decoration: none;
+  color: black;
+}
+
+#contenidopestanas{
+  clear: both;  
+  border-radius: 1px;
+  border-top-left-radius: 0px;
+  border: 1px solid gray;
+  padding: 10px;
+  height: 140px; /*calc(100vh-600px);*/
+}
+
+#cameraTabContent{
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+}
+
+/*  zoom fieldset    */
+#zoomFieldset {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#sldF {
+  width: 10vw;
+}
+
+/*------------------------------------------------------------------------------*/
+/*----------------------------------FIELDSETS-----------------------------------*/
+/*------------------------------------------------------------------------------*/
+
+fieldset {
+  padding: 5px;
+}
+
+/*------------------------------------------------------------------------------*/
+/*-----------------------------------CANVAS-------------------------------------*/
+/*------------------------------------------------------------------------------*/
+
+.graphContainer{
+  align-content: center;
+}
+#graph{
+  /*background-image: url("fotos/caraumilla2.jpg");*/
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/*------------------------------------------------------------------------------*/
+/*-----------------------------------INPUTS-------------------------------------*/
+/*------------------------------------------------------------------------------*/
+
+#tableInputData{
+  white-space: nowrap;
+  /*border: 1px solid gray;*/
+  overflow-x: hidden;
+}
+
+.labels{
+  font-size: small;
+}
+.inputSld{
+  background-color: lightslategrey;
+  width: 80vw; /*calc(100vw - 265px);*/
+}
+.txtnum{
+  background-color: rgb(255, 255, 255);
+  font-size: x-small;
+  text-align: right;
+  width: 5rem;
+}
+
+
+#otherCameraOptions{
+  white-space: nowrap;
+}
+#centerView label{
+  white-space: nowrap;
+}
+
+#sldPan, #sldTilt, #sldRoll {
+  width: 50vw;
+}
+/*------------------------------------------------------------------------------*/
+/*-----------------------------------OPCIONES-----------------------------------*/
+/*------------------------------------------------------------------------------*/
+
+.optionBox{
+  /*display: inline;*/
+  
+  font-size: x-small;
+  white-space: nowrap;
+  padding:none;
+}
+#optionFieldsets {
+  display: flex;
+  overflow-x: scroll;
+}
+.optionBox p{
+  float:left;
+  margin-top: 1px;
+  margin-bottom:0;
+}
+.optionBox div input{
+  background-color: whitesmoke;
+  font-size: xx-small;
+}
+/*------------------------------------------------------------------------------*/
+/*----------------------------PESTAÑA OPCIONES OBJETIVO-------------------------*/
+/*------------------------------------------------------------------------------*/
+#objectOptionsContainer {
+  display: flex;
+  flex-direction: column;
+  overflow-x: scroll;
+}
+
+#objectTypeFieldset {
+  width: min-content;
+}
+
+/*------------------------------------------------------------------------------*/
+/*---------------------------------PESTAÑA GRÁFICOS-----------------------------*/
+/*------------------------------------------------------------------------------*/
+#graphicControlContainer {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+}
+
+/*------------------------------------------------------------------------------*/
+/*-----------------------------------RESULTADOS---------------------------------*/
+/*------------------------------------------------------------------------------*/
+
+.tableResultsData{
+  overflow-x: wrap;
+  white-space: nowrap;
+}
+.rowResults td div{
+  display: inline;
+}
+.selUnit{
+  background-color: whitesmoke;
+  font-size: xx-small;
+  width: 3rem;
+
+}
+
+
+.txtresult{
+  background-color: white;
+  font-size: xx-small;
+  text-align: right;
+  width: 12rem;
+}
+.rowLbl td{
+  font-size: small;
+}
+.result label{
+  list-style: none;
+  font-size: small;
+  align-items: center;
+}
