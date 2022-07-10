@@ -46,6 +46,7 @@
   border: 1px solid gray;
   padding: 10px;
   height: 140px; /*calc(100vh-600px);*/
+  overflow-x: scroll; 
 }
 
 #cameraTabContent{
@@ -80,7 +81,6 @@ fieldset {
   align-content: center;
 }
 #graph{
-  /*background-image: url("fotos/caraumilla2.jpg");*/
   background-repeat: no-repeat;
   background-size: contain;
   display: block;
