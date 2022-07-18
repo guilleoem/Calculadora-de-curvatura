@@ -7,7 +7,8 @@
   <link href="main.css" rel="stylesheet"/>
   <title>Calculadora de curvatura</title>
 </head>
-<body onload="cambiarPestanna(1);calcZoom();dibujar();">
+
+<body onload="initCalc();">
 
   <h1>Calculadora de curvatura</h1>
 
@@ -380,10 +381,10 @@
       </div>
 
 
-      <div id="pest6">
+      <div id="pest6">            <!--Camera tab-->
 
       
-        <div id="cpestana6">        <!--Camera tab-->
+        <div id="cpestana6">        
           <div id="cameraTabContent">
             
               <div>
@@ -432,19 +433,19 @@
                     <td><label class="labels">paneo</label></td>
                     <td><input type="text" id="angPan" value="0" class="txtnum"></td>
                     <td><div name="unitAngleContainer">°</div></td>
-                    <td><input type="range" min="-1.37079632679" max="1.37079632679" step="any" value="0" class="inputSldAux" id="sldPan"></td>
+                    <td><input type="range" min="-0.77079632679" max="0.77079632679" step="any" value="0" class="inputSldAux" id="sldPan"></td>
                   </tr>
                   <tr>
                     <td><label class="labels">cabeceo</label></td>
                     <td><input type="text" id="angTilt" value="0" class="txtnum"></td>
                     <td><div name="unitAngleContainer">°</div></td>
-                    <td name="tiltslider"><input type="range" min="-1.5964532925199433" max="1.5174532925199433" step="any" value="0"class="inputSldAux" id="sldTilt"></td>
+                    <td name="tiltslider"><input type="range" min="-1.5174532925199433" max="1.5174532925199433" step="any" value="0"class="inputSldAux" id="sldTilt"></td>
                   </tr>
                   <tr>
                     <td><label class="labels">roll</label></td>
                     <td><input type="text"  id="angRoll" value="0" class="txtnum"></td>
                     <td><div name="unitAngleContainer">°</div></td>
-                    <td><input type="range" min="-0.9574532925199433" max="0.9574532925199433" step="any" value="0" class="inputSldAux" id="sldRoll"></td>
+                    <td><input type="range" min="-0.8874532925199433" max="0.8874532925199433" step="any" value="0" class="inputSldAux" id="sldRoll"></td>
                   </tr>
                 </tbody>
               </table>
@@ -455,9 +456,9 @@
         
       </div>
 
-      <div id="pest7">
+      <div id="pest7">            <!--Object options tab-->
 
-        <div id="cpestana7">        <!--Object options tab-->
+        <div id="cpestana7">       
           <div id="objectOptionsContainer">
             <fieldset id="objectTypeFieldset">
               <legend><i>tipo de objetivo</i></legend>
@@ -517,16 +518,12 @@
       <div id="pest8">
         <div id="cpestana8">        <!--Image tab-->
           <div id="graphicControlContainer">
-            <div>
-              <table>
-                <tbody>
-                  <tr>fondo
-                    <div><input type="file" id="imgfondo" accept="image/png, image/jpeg"></div>
-                  </tr>
-                </tbody>
-              </table>
+            <fieldset id="imgFondo">
+              <legend><i>fondo</i></legend>
+                <input type="file" id="imgfondo" accept="image/png, image/jpeg">
+                <button id="btnClearBackgroundImg">limpiar</button>
+            </fieldset>
             
-            </div>
             <fieldset id="controlAlpha">
               <legend><i>color</i></legend>
               <table>
@@ -572,12 +569,12 @@
             </table>
             </fieldset>
           </div>
-        
+        </div>
       </div>    
 
-        <div id="pest9">
+      <div id="pest9">
 
-          <div id="cpestana9">        <!--Animation tab-->
+        <div id="cpestana9">        <!--Animation tab-->
             <!--
             <table>
               <tbody>
@@ -603,21 +600,17 @@
               </tbody>
             </table>
             -->
-          </div>
         </div>
-      
+      </div>
+
+      <div id="pest10">
+
+        <div id="cpestana10"></div>
+      </div>
+
     </div>
   
-    <script src="JS.js">dibujar();</script>
-
-  <!--<script src="calc.js">dibujar();</script>
-  <script src="graph.js"></script>
-  <script src="graph3D.js"></script>    
-  <script src="tabs.js"></script>
-  <script src="cuaternions.js"></script>
-  <script src="anim.js"></script>
-  <script src="mouseevents.js"></script>
-  <script src="objects.js"></script>-->
+  <script src="JS.js"></script>
 
   
 </body>
