@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700&family=Lexend+Deca&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="Images/favicon-32x32.png">
   <link href="main.css" rel="stylesheet"/>
   <title>Calculadora de curvatura</title>
@@ -22,9 +23,9 @@
       <tbody>
         <tr>
           <td><label class="labels">Altura observador</label></td>
-          <td><input type="text" id="ho" value="1.8" class="txtnum"></td>
+          <td><input type="text" id="ho" value="2" class="txtnum"></td>
           <td><div name="selUnitContainer"></div></td>
-          <td><div><input type="range" min="0.01" max="450000" step="any" value="1.8" class="inputSld" id="sldAlturaObservador"></div></td>
+          <td><div><input type="range" min="0.01" max="450000" step="any" value="2" class="inputSld" id="sldAlturaObservador"></div></td>
         </tr>
         <tr>
           <td><label class="labels">Distancia</label></td>
@@ -57,6 +58,7 @@
           <li id="pestana7"><a href='javascript:cambiarPestanna(7);'>Opciones objetivo</a></li>
           <li id="pestana8"><a href='javascript:cambiarPestanna(8);'>Gráfico</a></li>
           <li id="pestana9"><a href='javascript:cambiarPestanna(9);'>Animación</a></li>
+          <li id="pestana10"><a href='javascript:openPopupInfo();'>Créditos</a></li>
       </ul>
     </div>
 
@@ -594,22 +596,60 @@
       </div>
 
       <div id="pest10">
+        <div id="popupWrapper">
+          <div class="popup" id="popupInfo" >
+            <div id="tabsInfo">
+              <ul>
+                <li id="infoTab"><b>Info</b></li>
+                <li id="aboutTab"><b>Acerca</b></li>
+                <li id="projectsTab"><b>Proyectos</b></li>
+              </ul>
+            </div>
 
-        <div id="cpestana10"></div>
+            <div class="popupInfoContent">
+
+              <div id="infoTabContent">
+                <p>Una web app que permite calcular cómo debería verse un objeto en la distancia según la curvatura de la Tierra.</p>
+                <p>Está dividida en tres partes principales:</p>
+                <p>
+                  <ul>
+                    <li>La gráfica que es la superior y que presenta una vista en 3D o bien un esquema simplificado que ilustra la situación. Se puede cambiar desde <kbd style="border-top-left-radius: 5px; border-top-right-radius: 5px; border: 1px solid gray;">Opciones</kbd>/<kbd>vista.</kbd></li>
+                    <li>Por debajo hay controles para las 3 variables principales: la altura del observador, la distancia a la que se encuentra el objetivo y el tamaño del objetivo medido desde la superficie de referencia. Los valores se pueden ajustar deslizando los sliders o bien entrando el valor en las cajas de texto. Cualquier cambio en las variables se ve inmediatamente reflejado en la gráfica y en los cuadros deresultados.</li>
+                    <li>En la parte inferior hay pestañas en donde se agrupan los resultados, opciones y preferencias, añadir refracción atmosférica, ajustes adicionales de gráfica, algunas animaciones, etc.</li>
+                  </ul>
+                </p>
+
+              </div>
+              <div id="aboutTabContent">
+                <b>Créditos</b>
+                <p>Código, diseño y cálculos por <span id="author"></span>. Si tiene alguna pregunta, sugerencia o comentario no dude en contactarme.</p>
+                <a href="mailto:guilleoem@gmail.com"><span id="authoremail"></span></a>
+
+                <p>El programa no usa frameworks ni dependencias. Se hizo en Vanilla JavaScript.</p>
+
+
+              </div>
+              <div id="projectsTabContent">  
+                <b><a href="https://guilleoem.github.io/FlightsInFlatEarth/" target="_blank">Calculadora trayectorias, distancias y rumbos.</a></b>
+                <p>Una web app que trata el tema de la "Tierra plana" desde el problema de las distancias. Para hacerlo calcula trayectorias óptimas y rumbos entre distintas localidades de la Tierra, tanto en un globo terráqueo como en el "mapa de la Tierra plana" y presenta los datos para comparar con cualquier trayecto real.</p>
+
+
+              </div>
+
+            </div>
+            <div class="popupFooter">
+
+              <button class='btnMenu' id="btnPopupInfoClose" onclick="closePopup()">Listo!</button>
+            </div>
+        </div>
+      </div>
+        
       </div>
 
     </div>
-  
-  <script src="JS.js"></script>
+    
+    <script src="JS.js">dibujar();</script>
 
-  <!--<script src="calc.js"></script>
-  <script src="graph.js"></script>
-  <script src="graph3D.js"></script>    
-  <script src="tabs.js"></script>
-  <script src="cuaternions.js"></script>
-  <script src="anim.js"></script>
-  <script src="mouseevents.js"></script>
-  <script src="objects.js"></script>-->
 
   
 </body>
